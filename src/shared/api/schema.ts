@@ -15,3 +15,12 @@ export const JoinEventSchema = z.object({
 export const LeaveEventSchema = z.object({
     id: z.number().int().positive(),
 });
+
+export const EditEventSchema = z.object({
+    id: z.number().int().positive(),
+    title: z.string().min(1),
+    description: z.string().optional(),
+    date: z.coerce.date(),
+});
+
+export type EditEventSchema = z.infer<typeof EditEventSchema>;

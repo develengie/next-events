@@ -2,6 +2,7 @@ import {
     CreateEventSchema,
     JoinEventSchema,
     LeaveEventSchema,
+    EditEventSchema,
 } from "@/shared/api";
 import { prisma } from "../db";
 import { isAuth, procedure, router } from "../trpc";
@@ -43,6 +44,8 @@ export const eventRouter = router({
                             },
                         },
                     },
+                    id: true,
+                    authorId: true,
                 },
             });
         }),
@@ -78,6 +81,21 @@ export const eventRouter = router({
                         userId: user.id,
                         eventId: input.id,
                     },
+                },
+            });
+        }),
+    edit: procedure
+        .input(EditEventSchema)
+        .use(isAuth)
+        .mutation(({ input }) => {
+            return prisma.event.update({
+                where: {
+                    id: input.id,
+                },
+                data: {
+                    title: input.title,
+                    description: input.description,
+                    date: input.date,
                 },
             });
         }),
