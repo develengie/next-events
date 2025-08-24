@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CreateEventSchema } from "@/shared/api";
+import { useRouter } from "next/router";
 
 type EditEventFormProps = {
     initialData: {
@@ -15,6 +16,8 @@ export const EditEventForm = ({
     initialData,
     onSubmit,
 }: EditEventFormProps) => {
+    const router = useRouter();
+
     const {
         register,
         handleSubmit,
@@ -118,6 +121,7 @@ export const EditEventForm = ({
                 <button
                     type="button"
                     className="text-sm font-semibold leading-6 text-gray-900"
+                    onClick={() => router.back()}
                 >
                     Отмена
                 </button>
